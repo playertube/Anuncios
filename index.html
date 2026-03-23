@@ -134,5 +134,40 @@ fetch('anuncios.json')
 .catch(err => console.error('Erro ao carregar JSON:', err));
 </script>
 
+<script>
+// Limitar caracteres
+function limitarTexto(texto, limite) {
+    return texto.length > limite ? texto.substring(0, limite) + '...' : texto;
+}
+
+// RSS -> JSON usando API gratuita
+const RSS_URL = "https://api.rss2json.com/v1/api.json?rss_url=https://g1.globo.com/rss/g1/ce/ceara/";
+
+fetch(RSS_URL)
+.then(res => res.json())
+.then(data => {
+    const container = document.getElementById('noticias');
+
+    data.items.slice(0, 6).forEach(noticia => {
+
+        const card = document.createElement('div');
+        card.className = 'card';
+
+        const imagem = noticia.thumbnail || 'https://via.placeholder.com/300x180';
+
+        card.innerHTML = `
+            <img src="${imagem}">
+            <div class="card-content">
+                <h3>${limitarTexto(noticia.title, 80)}</h3>
+                <p>${limitarTexto(noticia.description.replace(/<[^>]+>/g, ''), 120)}</p>
+            </div>
+            <a href="${noticia.link}" target="_blank">Ver notícia</a>
+        `;
+
+        container.appendChild(card);
+    });
+});
+</script>
+
 </body>
 </html>
