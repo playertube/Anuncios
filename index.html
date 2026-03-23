@@ -35,6 +35,56 @@
     100% { transform: translateX(-100%); }
 }
 </style>
+
+<style>
+#noticias {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 15px;
+    padding: 20px;
+}
+
+.card {
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    background: #fff;
+    display: flex;
+    flex-direction: column;
+}
+
+.card img {
+    width: 100%;
+    height: 180px;
+    object-fit: cover;
+}
+
+.card-content {
+    padding: 15px;
+    flex: 1;
+}
+
+.card h3 {
+    font-size: 16px;
+    margin-bottom: 10px;
+}
+
+.card p {
+    font-size: 14px;
+    color: #555;
+}
+
+.card a {
+    display: block;
+    text-align: center;
+    background: #007BFF;
+    color: #fff;
+    padding: 10px;
+    text-decoration: none;
+    font-weight: bold;
+}
+</style>
+    
 </head>
 
 <body>
