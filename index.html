@@ -16,6 +16,7 @@
     z-index: 9999;
     padding: 10px 0;
     font-size: 14px;
+    cursor: pointer;
 }
 
 #conteudo-anuncios {
@@ -43,7 +44,7 @@
 </div>
 
 <script>
-// Função para embaralhar (randomizar)
+// Embaralhar
 function embaralhar(array) {
     for (let i = array.length - 1; i > 0; i--) {
         const j = Math.floor(Math.random() * (i + 1));
@@ -52,22 +53,30 @@ function embaralhar(array) {
     return array;
 }
 
+const barra = document.getElementById('barra-anuncios');
+const conteudo = document.getElementById('conteudo-anuncios');
+
+let pausado = false;
+
+// Clique para pausar/continuar
+barra.addEventListener('click', () => {
+    pausado = !pausado;
+    conteudo.style.animationPlayState = pausado ? 'paused' : 'running';
+});
+
 // Carregar JSON
 fetch('anuncios.json')
 .then(res => res.json())
 .then(dados => {
-    const container = document.getElementById('conteudo-anuncios');
 
     const anuncios = embaralhar(dados);
-
-    // Criar lista duplicada (para scroll infinito suave)
     const listaFinal = [...anuncios, ...anuncios];
 
     listaFinal.forEach(item => {
         const span = document.createElement('span');
         span.className = 'anuncio';
         span.textContent = `${item.nome} | ${item.telefone}`;
-        container.appendChild(span);
+        conteudo.appendChild(span);
     });
 })
 .catch(err => console.error('Erro ao carregar JSON:', err));
